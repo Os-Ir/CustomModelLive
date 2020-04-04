@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EventHandlerClient {
 	@SubscribeEvent
 	public static void render(RenderGameOverlayEvent.Post e) {
-		if (Minecraft.getMinecraft().currentScreen == null) {
+		if (e.getType() == RenderGameOverlayEvent.ElementType.AIR && Minecraft.getMinecraft().currentScreen == null) {
 			int width = e.getResolution().getScaledWidth();
 			int height = e.getResolution().getScaledHeight();
 			PlayerRenderer.INSTANCE.renderPlayer(width, height, PlayerRenderer.INSTANCE.mouseX,
