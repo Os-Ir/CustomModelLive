@@ -1,7 +1,7 @@
 package com.osir.custommodellive;
 
 import com.osir.custommodellive.gui.GuiHandler;
-import com.osir.custommodellive.gui.GuiModelConfig;
+import com.osir.custommodellive.gui.GuiConfig;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,7 +19,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent e) {
 		super.init(e);
 		NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GuiHandler());
-		ClientRegistry.registerKeyBinding(GuiModelConfig.KEY);
+		ClientRegistry.registerKeyBinding(GuiConfig.KEY);
 	}
 
 	@Override

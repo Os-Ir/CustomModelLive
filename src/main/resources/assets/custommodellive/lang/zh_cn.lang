@@ -1,3 +1,15 @@
 
 key.custommodellive.category=Custom Model Live
-key.custommodellive.config=打开模型设置界面
+key.custommodellive.config=打开设置界面
+
+custommodellive.config=设置
+custommodellive.config.texture=材质设置
+custommodellive.config.model=模型设置
+
+custommodellive.config.model.use=启用模型渲染:
+custommodellive.config.model.x=x:
+custommodellive.config.model.x.tip=按左右键以移动(按Shift以10倍移动)
+custommodellive.config.model.y=y:
+custommodellive.config.model.y.tip=按上下键以移动(按Shift以10倍移动)
+custommodellive.config.model.scale=缩放:
+custommodellive.config.model.scale.tip=按等于和减号键以缩放(按Shift以10倍缩放)

@@ -1,6 +1,6 @@
 package com.osir.custommodellive;
 
-import com.osir.custommodellive.gui.GuiModelConfig;
+import com.osir.custommodellive.gui.GuiConfig;
 import com.osir.custommodellive.gui.PlayerRenderer;
 
 import net.minecraft.client.Minecraft;
@@ -19,16 +19,13 @@ public class EventHandlerClient {
 	public static void render(RenderGameOverlayEvent.Post e) {
 		if (e.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE
 				&& Minecraft.getMinecraft().currentScreen == null) {
-			int width = e.getResolution().getScaledWidth();
-			int height = e.getResolution().getScaledHeight();
-			PlayerRenderer.INSTANCE.renderPlayer(width, height, PlayerRenderer.INSTANCE.mouseX,
-					PlayerRenderer.INSTANCE.mouseY);
+			PlayerRenderer.INSTANCE.renderPlayer(PlayerRenderer.INSTANCE.mouseX, PlayerRenderer.INSTANCE.mouseY, false);
 		}
 	}
 
 	@SubscribeEvent
 	public static void onKeyInput(InputEvent.KeyInputEvent e) {
-		if (GuiModelConfig.KEY.isPressed()) {
+		if (GuiConfig.KEY.isPressed()) {
 			EntityPlayer player = PlayerRenderer.INSTANCE.getPlayer();
 			player.openGui(Main.instance, 0, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		}

@@ -1,3 +1,15 @@
 
 key.custommodellive.category=Custom Model Live
-key.custommodellive.config=Open Model Config Screen
+key.custommodellive.config=Open Config Screen
+
+custommodellive.config=Config
+custommodellive.config.texture=Texture Config
+custommodellive.config.model=Model Config
+
+custommodellive.config.model.use=Enable Model Render:
+custommodellive.config.model.x=x:
+custommodellive.config.model.x.tip=Press left and right key to move (Press Shift for 10 times move)
+custommodellive.config.model.y=y:
+custommodellive.config.model.y.tip=Press up and down key to move (Press Shift for 10 times move)
+custommodellive.config.model.scale=Scale:
+custommodellive.config.model.scale.tip=Press equal and minus key to scale (Press Shift for 10 times scale)
