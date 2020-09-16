@@ -13,3 +13,6 @@ custommodellive.config.model.y=y:
 custommodellive.config.model.y.tip=按上下键以移动(按Shift以10倍移动)
 custommodellive.config.model.scale=缩放:
 custommodellive.config.model.scale.tip=按等于和减号键以缩放(按Shift以10倍缩放)
+
+custommodellive.config.texture.useSkin=启用自定义皮肤
+custommodellive.config.texture.choose=选择文件

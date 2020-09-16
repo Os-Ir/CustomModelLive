@@ -13,3 +13,6 @@ custommodellive.config.model.y=y:
 custommodellive.config.model.y.tip=Press up and down key to move (Press Shift for 10 times move)
 custommodellive.config.model.scale=Scale:
 custommodellive.config.model.scale.tip=Press equal and minus key to scale (Press Shift for 10 times scale)
+
+custommodellive.config.texture.useSkin=Enable Custom Skin
+custommodellive.config.texture.choose=Choose File

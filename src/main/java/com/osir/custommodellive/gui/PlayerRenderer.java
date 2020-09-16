@@ -1,7 +1,13 @@
 package com.osir.custommodellive.gui;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import com.google.gson.Gson;
+import com.osir.custommodellive.Main;
 import com.osir.custommodellive.model.ModelCustom;
 import com.osir.custommodellive.model.RenderCustom;
 
@@ -15,6 +21,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.Loader;
 
 public class PlayerRenderer {
 	public static final PlayerRenderer INSTANCE = new PlayerRenderer();
@@ -24,14 +31,16 @@ public class PlayerRenderer {
 
 	private static final RenderPlayer RENDER = new RenderCustom(Minecraft.getMinecraft().getRenderManager());
 
-	public boolean enable;
-	public int posX, posY, scale, mouseX, mouseY;
+	public boolean enable, useSkin, skinLoaded;
+	public int posX, posY, scale, mouseX, mouseY, skinId;
+	public File file;
 
 	private PlayerRenderer() {
 		this.posX = 410;
 		this.posY = 350;
 		this.scale = 100;
 		this.enable = true;
+		this.loadConfig();
 	}
 
 	public AbstractClientPlayer getPlayer() {
@@ -39,6 +48,60 @@ public class PlayerRenderer {
 			playerCache = new WeakReference<EntityPlayer>(Minecraft.getMinecraft().player);
 		}
 		return (AbstractClientPlayer) playerCache.get();
+	}
+
+	public void loadConfig() {
+		Path path = Loader.instance().getConfigDir().toPath().resolve(Main.MODID).resolve("config.json");
+		if (!Files.exists(path)) {
+			return;
+		}
+		String data = null;
+		try {
+			data = new String(Files.readAllBytes(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (data == null) {
+			return;
+		}
+		this.useConfigData(new Gson().fromJson(data, ConfigData.class));
+	}
+
+	public void saveConfig() {
+		Path path = Loader.instance().getConfigDir().toPath().resolve(Main.MODID);
+		if (!Files.exists(path)) {
+			try {
+				Files.createDirectories(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		path = path.resolve("config.json");
+		if (!Files.exists(path)) {
+			try {
+				Files.createFile(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		String data = new Gson().toJson(this.getConfigData());
+		try {
+			Files.write(path, data.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean bindSkin() {
+		if (this.file == null || !this.file.exists()) {
+			return false;
+		}
+		if (!this.skinLoaded) {
+			this.skinId = ImageFileTexture.loadTexture(this.file);
+			this.skinLoaded = true;
+		}
+		ImageFileTexture.bindTexture(this.skinId);
+		return true;
 	}
 
 	public void renderPlayer(int mouseX, int mouseY, boolean guiOpened) {
@@ -96,5 +159,31 @@ public class PlayerRenderer {
 		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 		GlStateManager.disableTexture2D();
 		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	}
+
+	public ConfigData getConfigData() {
+		ConfigData data = new ConfigData();
+		data.enable = this.enable;
+		data.useSkin = this.useSkin;
+		data.posX = this.posX;
+		data.posY = this.posY;
+		data.scale = this.scale;
+		data.file = this.file.getAbsolutePath();
+		return data;
+	}
+
+	public void useConfigData(ConfigData data) {
+		this.enable = data.enable;
+		this.useSkin = data.useSkin;
+		this.posX = data.posX;
+		this.posY = data.posY;
+		this.scale = data.scale;
+		this.file = new File(data.file);
+	}
+
+	public static class ConfigData {
+		public boolean enable, useSkin;
+		public int posX, posY, scale;
+		public String file;
 	}
 }

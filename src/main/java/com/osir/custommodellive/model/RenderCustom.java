@@ -7,6 +7,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public class RenderCustom extends RenderPlayer {
 	public RenderCustom(RenderManager renderManager) {
@@ -31,6 +32,20 @@ public class RenderCustom extends RenderPlayer {
 		}
 		super.renderLayers(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw,
 				headPitch, scaleIn);
+	}
+
+	@Override
+	protected boolean bindEntityTexture(AbstractClientPlayer entity) {
+		if (PlayerRenderer.INSTANCE.useSkin && PlayerRenderer.INSTANCE.bindSkin()) {
+			return true;
+		}
+		ResourceLocation resourcelocation = this.getEntityTexture(entity);
+		if (resourcelocation == null) {
+			return false;
+		} else {
+			this.bindTexture(resourcelocation);
+			return true;
+		}
 	}
 
 	@Override

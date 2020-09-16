@@ -1,7 +1,7 @@
 package com.osir.custommodellive;
 
-import com.osir.custommodellive.gui.GuiHandler;
 import com.osir.custommodellive.gui.GuiConfig;
+import com.osir.custommodellive.gui.GuiHandler;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

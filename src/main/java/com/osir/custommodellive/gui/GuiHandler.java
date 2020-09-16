@@ -15,10 +15,6 @@ public class GuiHandler implements IGuiHandler {
 		switch (id) {
 		case 0:
 			return new GuiConfig();
-		case 1:
-			return new GuiConfigTexture();
-		case 2:
-			return new GuiConfigModel();
 		}
 		return null;
 	}

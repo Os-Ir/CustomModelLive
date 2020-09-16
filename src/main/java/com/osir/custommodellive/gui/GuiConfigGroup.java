@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.Validate;
 
+import com.osir.custommodellive.gui.entry.FileChooseEntry;
 import com.osir.custommodellive.gui.entry.IGuiConfigEntry;
 import com.osir.custommodellive.gui.entry.InformationEntry;
 import com.osir.custommodellive.gui.entry.SupplierEntry;
@@ -70,6 +71,11 @@ public class GuiConfigGroup {
 
 		public GuiConfigGroupBuilder addInformation(boolean isUnlocalized, String text) {
 			this.entries.add(new InformationEntry(isUnlocalized, text));
+			return this;
+		}
+
+		public GuiConfigGroupBuilder addFileChoose() {
+			this.entries.add(new FileChooseEntry());
 			return this;
 		}
 

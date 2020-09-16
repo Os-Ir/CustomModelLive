@@ -83,10 +83,6 @@ public class GuiConfig extends GuiScreen {
 		}
 	}
 
-	protected void drawConfigInfo() {
-
-	}
-
 	private int getMouseOnButton(int mouseX, int mouseY) {
 		if (mouseX < 2 || mouseX >= 70 || mouseY < 17) {
 			return -1;
@@ -119,6 +115,10 @@ public class GuiConfig extends GuiScreen {
 										.addSupplier(false,
 												() -> "" + TextFormatting.GREEN + PlayerRenderer.INSTANCE.scale)
 										.build())));
+		CONFIG_GROUP.add(Pair.of("texture",
+				Arrays.asList(GuiConfigGroup.builder().addText(true, "custommodellive.config.texture.useSkin")
+						.addSwitch(() -> PlayerRenderer.INSTANCE.useSkin, () -> PlayerRenderer.INSTANCE.useSkin ^= true)
+						.addFileChoose().build())));
 	}
 
 	@Override
@@ -133,15 +133,22 @@ public class GuiConfig extends GuiScreen {
 	}
 
 	@Override
+	public void onGuiClosed() {
+		PlayerRenderer.INSTANCE.saveConfig();
+	}
+
+	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		int startX = this.width / 2 - 51;
-		int startY = this.height / 2 - 78;
-		int idx = (mouseY - startY) / 14;
-		int height = (mouseY - startY) % 14;
-		List<GuiConfigGroup> list = CONFIG_GROUP.get(this.openGui).getRight();
-		if (list.size() > idx && height < 9) {
-			list.get(idx).onClicked(this, this.fontRenderer, mouseX - startX, height);
+		if (this.openGui != -1) {
+			int startX = this.width / 2 - 51;
+			int startY = this.height / 2 - 78;
+			int idx = (mouseY - startY) / 14;
+			int height = (mouseY - startY) % 14;
+			List<GuiConfigGroup> list = CONFIG_GROUP.get(this.openGui).getRight();
+			if (list.size() > idx && height < 9) {
+				list.get(idx).onClicked(this, this.fontRenderer, mouseX - startX, height);
+			}
 		}
 	}
 
